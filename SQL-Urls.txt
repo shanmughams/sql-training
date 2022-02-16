@@ -1,3 +1,7 @@
+Practice SQL Queries
+https://www.youtube.com/playlist?list=PLavw5C92dz9Eq4XcsdoSZiTKvOONVqsZv
+
+
 https://www.youtube.com/channel/UCnz-ZXXER4jOvuED5trXfEA
 
 Subquery in SQL | Correlated Subquery + Complete SQL Subqueries Tutorial
@@ -13,3 +17,16 @@ https://techtfq.com/blog/practice-sql-interview-questions-on-leetcode
 https://techtfq.com/video/sql-window-function-part1-sql-queries-tutorial
 
 https://techtfq.com/video/sql-window-function-sql-queries-tutorial-part-2
+
+Learn how to write SQL Queries(Practice Complex SQL Queries)
+======================================================
+https://www.youtube.com/watch?v=FNYdBLwZ6cE
+https://techtfq.com/blog/learn-how-to-write-sql-queries-practice-complex-sql-queries
+
+
+
+DSS Training Solutions DSS
+https://www.youtube.com/channel/UCTdntFp0UErzah95dw99c4Q/playlists
+
+Oracle Architecture - Tmail
+https://www.youtube.com/watch?v=HxmtVycWpjU&list=PLE4IXhKSzNicSsgF5MPQYZHGUgMBYoPi3
