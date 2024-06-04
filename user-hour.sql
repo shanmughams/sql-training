@@ -1,3 +1,49 @@
+WITH week_days AS (
+    SELECT 
+        soeid,
+        CASE 
+            WHEN date_captured BETWEEN TO_DATE('2024-04-23', 'YYYY-MM-DD') AND TO_DATE('2024-04-29', 'YYYY-MM-DD') THEN 'week1'
+            WHEN date_captured BETWEEN TO_DATE('2024-04-30', 'YYYY-MM-DD') AND TO_DATE('2024-05-06', 'YYYY-MM-DD') THEN 'week2'
+            WHEN date_captured BETWEEN TO_DATE('2024-05-07', 'YYYY-MM-DD') AND TO_DATE('2024-05-13', 'YYYY-MM-DD') THEN 'week3'
+            WHEN date_captured BETWEEN TO_DATE('2024-05-14', 'YYYY-MM-DD') AND TO_DATE('2024-05-20', 'YYYY-MM-DD') THEN 'week4'
+            WHEN date_captured BETWEEN TO_DATE('2024-05-21', 'YYYY-MM-DD') AND TO_DATE('2024-05-25', 'YYYY-MM-DD') THEN 'week5'
+        END AS week,
+        TO_CHAR(date_captured, 'DY') AS day_of_week
+    FROM 
+        dta
+    WHERE 
+        date_captured BETWEEN TO_DATE('2024-04-23', 'YYYY-MM-DD') AND TO_DATE('2024-05-25', 'YYYY-MM-DD')
+        AND TO_CHAR(date_captured, 'DY') NOT IN ('SAT', 'SUN')
+),
+week_presence AS (
+    SELECT 
+        soeid,
+        week,
+        COUNT(DISTINCT day_of_week) AS days_present
+    FROM 
+        week_days
+    GROUP BY 
+        soeid, week
+),
+soeid_week_count AS (
+    SELECT 
+        soeid,
+        COUNT(week) AS week_count
+    FROM 
+        week_presence
+    WHERE 
+        days_present = 5 -- Ensure all weekdays (Mon to Fri) are present
+    GROUP BY 
+        soeid
+)
+SELECT 
+    soeid
+FROM 
+    soeid_week_count
+WHERE 
+    week_count <= 3;
+
+--------------------
 WITH week_data AS (
     SELECT 
         soeid,
