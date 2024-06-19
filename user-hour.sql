@@ -1,3 +1,48 @@
+--check if the soeid is not present for minimum 3 days in both weeks
+
+WITH week_days AS (
+    SELECT 
+        soeid,
+        CASE 
+            WHEN date_captured BETWEEN TO_DATE('2024-06-03', 'YYYY-MM-DD') AND TO_DATE('2024-06-09', 'YYYY-MM-DD') THEN 'week1'
+            WHEN date_captured BETWEEN TO_DATE('2024-06-10', 'YYYY-MM-DD') AND TO_DATE('2024-06-14', 'YYYY-MM-DD') THEN 'week2'
+        END AS week,
+        TO_CHAR(date_captured, 'DY') AS day_of_week
+    FROM 
+        dta
+    WHERE 
+        date_captured BETWEEN TO_DATE('2024-06-03', 'YYYY-MM-DD') AND TO_DATE('2024-06-14', 'YYYY-MM-DD')
+        AND TO_CHAR(date_captured, 'DY') NOT IN ('SAT', 'SUN')
+),
+week_presence AS (
+    SELECT 
+        soeid,
+        week,
+        COUNT(DISTINCT day_of_week) AS days_present
+    FROM 
+        week_days
+    GROUP BY 
+        soeid, week
+),
+soeid_week_count AS (
+    SELECT 
+        soeid,
+        SUM(CASE WHEN days_present < 3 THEN 1 ELSE 0 END) AS weeks_with_few_days
+    FROM 
+        week_presence
+    GROUP BY 
+        soeid
+)
+SELECT 
+    soeid
+FROM 
+    soeid_week_count
+WHERE 
+    weeks_with_few_days = 2;
+
+
+
+===================
 WITH week_days AS (
     SELECT 
         soeid,
